@@ -22,5 +22,5 @@ jobs:
         run: |
           python ./tools/bin/ci_check_dependency.py ./changed_files.txt
       - name: Run Stoat action
-        use: stoat-dev/stoat-action@liren/airbyte-connector-plugin
+        uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()

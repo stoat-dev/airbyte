@@ -41,5 +41,5 @@ jobs:
             > Error: ${{ steps.scd.outputs.error-message }}
 
       - name: Run Stoat action
-        use: stoat-dev/stoat-action@liren/airbyte-connector-plugin
+        uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()
