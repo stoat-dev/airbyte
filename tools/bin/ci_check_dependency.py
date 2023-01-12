@@ -166,12 +166,12 @@ def get_connector_changelog_status(connector: str, version: str) -> str:
 
 
 def get_connector_test_status(connector: str) -> str:
-    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=test-command.yml&gitref={BRANCH_NAME}"
+    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghPullRequestNumber=1&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=test-command.yml&gitref={BRANCH_NAME}"
     return f"[▶️ Test]({test_link})"
 
 
 def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
-    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=publish-command.yml&gitref={BRANCH_NAME}"
+    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghPullRequestNumber=1&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=publish-command.yml&gitref={BRANCH_NAME}"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
         return "⚪ Ignored"
