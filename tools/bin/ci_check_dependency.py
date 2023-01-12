@@ -35,7 +35,10 @@ IGNORED_DESTINATIONS = [
     re.compile("^destination-jdbc$")
 ]
 COMMENT_TEMPLATE_PATH = ".github/comment_templates/connector_dependency_template.md"
-STOAT_API_URL = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments"
+
+# TODO: move to server
+STOAT_API_URL = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/api/github/workflows/dispatch"
+APP_INSTALLATION_ID = 31425717
 
 
 def main():
@@ -162,12 +165,12 @@ def get_connector_changelog_status(connector: str, version: str) -> str:
 
 
 def get_connector_test_status(connector: str) -> str:
-    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
+    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1&ghInstallationId={APP_INSTALLATION_ID}"
     return f"[▶️ Test]({test_link})"
 
 
 def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
-    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Fpublish%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
+    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Fpublish%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1&ghInstallationId={APP_INSTALLATION_ID}"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
         return "⚪ Ignored"
