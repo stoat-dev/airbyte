@@ -35,6 +35,7 @@ IGNORED_DESTINATIONS = [
     re.compile("^destination-jdbc$")
 ]
 COMMENT_TEMPLATE_PATH = ".github/comment_templates/connector_dependency_template.md"
+STOAT_API_URL = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments"
 
 
 def main():
@@ -135,19 +136,19 @@ def get_connector_version_status(connector, version):
     if base_variant_version == version:
         return f"`{version}`"
     else:
-        return f"❌Mismatch: `{base_variant_version}`"
+        return f"❌ Mismatch: `{base_variant_version}`"
 
 
-def get_connector_changelog_status(connector: str, version) -> str:
+def get_connector_changelog_status(connector: str, version: str) -> str:
     type, name = connector.replace("-strict-encrypt", "").replace("-denormalized", "").split("-", 1)
     doc_path = f"{DOC_PATH}{type}s/{name}.md"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
-        return "⚪Ignored"
+        return "⚪ Ignored"
     if any(regex.match(connector) for regex in IGNORED_DESTINATIONS):
-        return "⚪Ignored"
+        return "⚪ Ignored"
     if not os.path.exists(doc_path):
-        return "❓Doc Missing"
+        return "❓ Doc Missing"
 
     with open(doc_path) as f:
         after_changelog = False
@@ -157,7 +158,27 @@ def get_connector_changelog_status(connector: str, version) -> str:
             if after_changelog and version in line:
                 return "✅"
 
-    return "❓Missing"
+    return "❓ Missing"
+
+
+def get_connector_test_status(connector: str) -> str:
+    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
+    return f"[▶️ Test]({test_link})"
+
+
+def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
+    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Fpublish%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
+
+    if any(regex.match(connector) for regex in IGNORED_SOURCES):
+        return "⚪ Ignored"
+    elif any(regex.match(connector) for regex in IGNORED_DESTINATIONS):
+        return "⚪ Ignored"
+    elif definition is None:
+        return f"[⤴ Publish]({publish_link}) (not in seed)"
+    elif definition["dockerImageTag"] == version:
+        return "✅ Published"
+    else:
+        return f"[⤴️ Publish]({publish_link})"
 
 
 def as_bulleted_markdown_list(items):
@@ -169,31 +190,20 @@ def as_bulleted_markdown_list(items):
 
 def as_json(connectors: List[str], definitions) -> json:
     result: json = {}
-    api_url = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments"
     for connector in connectors:
         version = get_connector_version(connector)
         version_status = get_connector_version_status(connector, version)
         changelog_status = get_connector_changelog_status(connector, version)
+        test_status = get_connector_test_status(connector)
         definition = next((x for x in definitions if x["dockerRepository"].endswith(connector)), None)
-        if any(regex.match(connector) for regex in IGNORED_SOURCES):
-            publish_status = "⚪Ignored"
-        elif any(regex.match(connector) for regex in IGNORED_DESTINATIONS):
-            publish_status = "⚪Ignored"
-        elif definition is None:
-            publish_status = "❓Not in Seed"
-        elif definition["dockerImageTag"] == version:
-            publish_status = "✅"
-        else:
-            publish_status = "🟡Pending Publication"
+        publish_status = get_connector_publish_status(connector, version, definition)
+
         result[connector] = {
             "version": version,
             "version_status": version_status,
             "changelog_status": changelog_status,
-            "publish_status": publish_status,
-            "has_error": "❌" in version_status or "❌" in changelog_status or "❌" in publish_status,
-            "has_warning": "⚠" in version_status or "⚠" in changelog_status or "⚠" in publish_status,
-            "test_link": f"{api_url}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1",
-            "publish_link": f"{api_url}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Fpublish%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
+            "test_status": test_status,
+            "publish_status": publish_status
         }
     return result
 
@@ -227,19 +237,12 @@ def write_report(depended_connectors):
     source_connectors_json = as_json(affected_sources, source_definitions)
     destination_connectors_json = as_json(affected_destinations, destination_definitions)
 
-    source_status_summary = get_status_summary(source_connectors_json)
-    destination_status_summary = get_status_summary(destination_connectors_json)
-
     result_json = {
         "show_connectors": len(affected_sources) > 0 or len(affected_destinations) > 0,
         "show_source": len(affected_sources) > 0,
         "show_destination": len(affected_destinations) > 0,
-        "source_open": "open" if source_status_summary == "❌" else "close",
-        "destination_open": "open" if destination_status_summary == "❌" else "closed",
         "sources": source_connectors_json,
         "destinations": destination_connectors_json,
-        "source_status_summary": source_status_summary,
-        "destination_status_summary": destination_status_summary,
         "num_sources": len(affected_sources),
         "num_destinations": len(affected_destinations),
     }

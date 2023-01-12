@@ -2,21 +2,21 @@
 ### Affected Connector Report
 
 {{#if plugins.json.connectors.value.show_source }}
-#### {{ plugins.json.connectors.value.source_status_summary}} Sources ({{ plugins.json.connectors.value.num_sources }})
+#### Sources ({{ plugins.json.connectors.value.num_sources }})
 
 | Connector | Version | Changelog | Test | Publish |
-| --- | :---: | :---: | :---: | :---: |
+| --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.sources}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [🔍Test]({{{ this.test_link }}}) | [🚀Publish]({{{ this.publish_link }}}) ({{ this.publish_status }}) |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | []({{{ this.test_link }}}) | [🚀Publish]({{{ this.publish_link }}}) ({{ this.publish_status }}) |
 {{/each}}
 
 {{/if}}
 
 {{#if plugins.json.connectors.value.show_destination }}
-#### {{ plugins.json.connectors.value.destination_status_summary }} Destinations ({{ plugins.json.connectors.value.num_destinations }})
+#### Destinations ({{ plugins.json.connectors.value.num_destinations }})
 
 | Connector | Version | Changelog | Test | Publish |
-| --- | :---: | :---: | :---: | :---: |
+| --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.destinations}}
 | `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [🔍Test]({{{ this.test_link }}}) | [🚀Publish]({{{ this.publish_link }}}) ({{ this.publish_status }}) |
 {{/each}}
