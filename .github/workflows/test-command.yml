@@ -22,6 +22,7 @@ on:
 
 jobs:
   integration-test:
+    runs-on: ubuntu-latest
     steps:
       - name: Mock connection publication
         run: |
