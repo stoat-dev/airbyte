@@ -30,7 +30,18 @@ on:
         default: "true"
 
 jobs:
+  workflow-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mark workflow as started
+        run: |
+          echo "{ \"${{ github.event.inputs.connector }}\": \"running\" }" > connector_publish.json
+      - name: Run Stoat action
+        uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
+        if: always()
+
   publish-image:
+    needs: workflow-start
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -38,10 +49,14 @@ jobs:
         with:
           ref: ${{ github.event.inputs.gitref }}
       - name: Mock connection publication
+        id: publish
         run: |
           echo "Mock connection publication (sleep for 10 seconds)..."
           sleep 10
           echo "Connector ${{ github.event.inputs.connector }} has been published"
+      - name: Mark workflow as completed
+        run: |
+          echo "{ \"${{ github.event.inputs.connector }}\": \"${{ steps.publish.outcome }}\" }" > connector_publish.json
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()

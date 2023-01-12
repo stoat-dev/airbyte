@@ -8,3 +8,7 @@ plugins:
   json:
     connectors:
       path: connector_report.json
+    connector-test:
+      path: connector_test.json
+    connector-publish:
+      path: connector_publish.json

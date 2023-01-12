@@ -21,7 +21,18 @@ on:
         required: false
 
 jobs:
+  workflow-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mark workflow as started
+        run: |
+          echo "{ \"${{ github.event.inputs.connector }}\": \"running\" }" > connector_test.json
+      - name: Run Stoat action
+        uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
+        if: always()
+
   integration-test:
+    needs: workflow-start
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,10 +40,14 @@ jobs:
         with:
           ref: ${{ github.event.inputs.gitref }}
       - name: Mock connection publication
+        id: test
         run: |
           echo "Mock connection test (sleep for 12 seconds)..."
           sleep 12
           echo "Integration test for connector ${{ github.event.inputs.connector }} has completed"
+      - name: Mark workflow as completed
+        run: |
+          echo "{ \"${{ github.event.inputs.connector }}\": \"${{ steps.test.outcome }}\" }" > connector_test.json
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()
