@@ -12,7 +12,7 @@
 | Connector | Version | Changelog | Publish |
 | --- | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.sources}}
-| {{ @key }} | {{ this.version_status }} | {{ this.changelog_status }} | {{ this.publish_status }} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{{ this.publish_status }}} |
 {{/each}}
 
 * See "Actionable Items" below for how to resolve warnings and errors.
@@ -31,7 +31,7 @@
 | Connector | Version | Changelog | Publish |
 | --- | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.destinations}}
-| {{ @key }} | {{ this.version_status }} | {{ this.changelog_status }} | {{ this.publish_status }} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{{ this.publish_status }}} |
 {{/each}}
 
 * See "Actionable Items" below for how to resolve warnings and errors.
