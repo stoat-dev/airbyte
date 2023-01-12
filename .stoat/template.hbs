@@ -7,7 +7,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.sources}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![test](https://shields.io/badge/-Test-green)]({{{ this.test_link }}}) | [![publish](https://shields.io/badge/-Publish-green)]({{{ this.publish_link }}}) |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [🔍Test]({{{ this.test_link }}}) | [🚀Publish]({{{ this.publish_link }}}) ({{ this.publish_status }}) |
 {{/each}}
 
 {{/if}}
@@ -18,7 +18,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.destinations}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![test](https://shields.io/badge/-Test-green)]({{{ this.test_link }}}) | [![publish](https://shields.io/badge/-Publish-green)]({{{ this.publish_link }}}) |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [🔍Test]({{{ this.test_link }}}) | [🚀Publish]({{{ this.publish_link }}}) ({{ this.publish_status }}) |
 {{/each}}
 
 {{/if}}

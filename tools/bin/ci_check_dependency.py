@@ -135,7 +135,7 @@ def get_connector_version_status(connector, version):
     if base_variant_version == version:
         return f"`{version}`"
     else:
-        return f"❌ `{version}`<br/>(mismatch: `{base_variant_version}`)"
+        return f"❌Mismatch: `{base_variant_version}`"
 
 
 def get_connector_changelog_status(connector: str, version) -> str:
@@ -143,11 +143,11 @@ def get_connector_changelog_status(connector: str, version) -> str:
     doc_path = f"{DOC_PATH}{type}s/{name}.md"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
-        return "🔵<br/>(ignored)"
+        return "⚪Ignored"
     if any(regex.match(connector) for regex in IGNORED_DESTINATIONS):
-        return "🔵<br/>(ignored)"
+        return "⚪Ignored"
     if not os.path.exists(doc_path):
-        return "⚠<br/>(doc not found)"
+        return "❓Doc Missing"
 
     with open(doc_path) as f:
         after_changelog = False
@@ -157,7 +157,7 @@ def get_connector_changelog_status(connector: str, version) -> str:
             if after_changelog and version in line:
                 return "✅"
 
-    return "❌<br/>(changelog missing)"
+    return "❓Missing"
 
 
 def as_bulleted_markdown_list(items):
@@ -176,15 +176,15 @@ def as_json(connectors: List[str], definitions) -> json:
         changelog_status = get_connector_changelog_status(connector, version)
         definition = next((x for x in definitions if x["dockerRepository"].endswith(connector)), None)
         if any(regex.match(connector) for regex in IGNORED_SOURCES):
-            publish_status = "🔵<br/>(ignored)"
+            publish_status = "⚪Ignored"
         elif any(regex.match(connector) for regex in IGNORED_DESTINATIONS):
-            publish_status = "🔵<br/>(ignored)"
+            publish_status = "⚪Ignored"
         elif definition is None:
-            publish_status = "⚠<br/>(not in seed)"
+            publish_status = "❓Not in Seed"
         elif definition["dockerImageTag"] == version:
             publish_status = "✅"
         else:
-            publish_status = "❌<br/>(diff seed version)"
+            publish_status = "🟡Pending Publication"
         result[connector] = {
             "version": version,
             "version_status": version_status,
