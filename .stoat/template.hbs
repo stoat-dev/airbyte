@@ -1,17 +1,17 @@
-{{#if plugins.json.connectors.show_connectors }}
+{{#if plugins.json.connectors.value.show_connectors }}
 ### Affected Connector Report
 
-{{#if plugins.json.connectors.show_source }}
-<details {{ plugins.json.connectors.source_open }}>
+{{#if plugins.json.connectors.value.show_source }}
+<details {{ plugins.json.connectors.value.source_open }}>
 <summary>
 
-#### {{ plugins.json.connectors.source_status_summary}} Sources ({{ plugins.json.connectors.num_sources }})
+#### {{ plugins.json.connectors.value.source_status_summary}} Sources ({{ plugins.json.connectors.value.num_sources }})
 
 </summary>
 
 | Connector | Version | Changelog | Publish |
 | --- | :---: | :---: | :---: |
-{{#each plugins.json.connectors.sources}}
+{{#each plugins.json.connectors.value.sources}}
 | {{ @key }} | {{ this.version_status }} | {{ this.changelog_status }} | {{ this.publish_status }} |
 {{/each}}
 
@@ -20,11 +20,11 @@
 </details>
 {{/if}}
 
-{{#if plugins.json.connectors.show_destination }}
-<details {{ plugins.json.connectors.destination_open }}>
+{{#if plugins.json.connectors.value.show_destination }}
+<details {{ plugins.json.connectors.value.destination_open }}>
 <summary>
 
-#### {{ plugins.json.connectors.destination_status_summary }} Destinations ({{ plugins.json.connectors.num_destinations }})
+#### {{ plugins.json.connectors.value.destination_status_summary }} Destinations ({{ plugins.json.connectors.value.num_destinations }})
 
 </summary>
 
