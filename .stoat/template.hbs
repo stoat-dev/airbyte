@@ -2,63 +2,26 @@
 ### Affected Connector Report
 
 {{#if plugins.json.connectors.value.show_source }}
-<details {{ plugins.json.connectors.value.source_open }}>
-<summary>
-
 #### {{ plugins.json.connectors.value.source_status_summary}} Sources ({{ plugins.json.connectors.value.num_sources }})
-
-</summary>
 
 | Connector | Version | Changelog | Test | Publish |
 | --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.sources}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![launch-integration-test](https://shields.io/badge/-Launch-green)](https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2Fsource-{{ @key }}&ghPullRequestNumber=1) | {{{ this.publish_status }}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![test](https://shields.io/badge/-Test-green)]({{{ this.test_link }}}) | [![publish](https://shields.io/badge/-Publish-green)]({{{ this.publish_link }}}) |
 {{/each}}
 
-* See "Actionable Items" below for how to resolve warnings and errors.
-
-</details>
 {{/if}}
 
 {{#if plugins.json.connectors.value.show_destination }}
-<details {{ plugins.json.connectors.value.destination_open }}>
-<summary>
-
 #### {{ plugins.json.connectors.value.destination_status_summary }} Destinations ({{ plugins.json.connectors.value.num_destinations }})
-
-</summary>
 
 | Connector | Version | Changelog | Test | Publish |
 | --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.destinations}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![launch-integration-test](https://shields.io/badge/-Launch-green)](https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2Fdestination-{{ @key }}&ghPullRequestNumber=1) | {{{ this.publish_status }}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![test](https://shields.io/badge/-Test-green)]({{{ this.test_link }}}) | [![publish](https://shields.io/badge/-Publish-green)]({{{ this.publish_link }}}) |
 {{/each}}
 
-* See "Actionable Items" below for how to resolve warnings and errors.
-
-</details>
 {{/if}}
-
-<details>
-
-<summary>
-
-#### Actionable Items
-
-(click to expand)
-
-</summary>
-
-| Category | Status | Actionable Item |
-| --- | :---: | --- |
-| Version | ❌<br/>mismatch | The version of the connector is different from its normal variant. Please bump the version of the connector. |
-| | ⚠<br/>doc not found | The connector does not seem to have a documentation file. This can be normal (e.g. basic connector like `source-jdbc` is not published or documented). Please double-check to make sure that it is not a bug. |
-| Changelog | ⚠<br/>doc not found | The connector does not seem to have a documentation file. This can be normal (e.g. basic connector like `source-jdbc` is not published or documented). Please double-check to make sure that it is not a bug. |
-| | ❌<br/>changelog missing | There is no chnagelog for the current version of the connector. If you are the author of the current version, please add a changelog. |
-| Publish | ⚠<br/>not in seed | The connector is not in the seed file (e.g. `source_definitions.yaml`), so its publication status cannot be checked. This can be normal (e.g. some connectors are cloud-specific, and only listed in the cloud seed file). Please double-check to make sure that it is not a bug. |
-| | ❌<br/>diff seed version | The connector exists in the seed file, but the latest version is not listed there. This usually means that the latest version is not published. Please use the `/publish` command to publish the latest version. |
-
-</details>
 
 {{/if}}
 

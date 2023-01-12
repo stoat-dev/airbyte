@@ -169,6 +169,7 @@ def as_bulleted_markdown_list(items):
 
 def as_json(connectors: List[str], definitions) -> json:
     result: json = {}
+    api_url = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments"
     for connector in connectors:
         version = get_connector_version(connector)
         version_status = get_connector_version_status(connector, version)
@@ -191,6 +192,8 @@ def as_json(connectors: List[str], definitions) -> json:
             "publish_status": publish_status,
             "has_error": "❌" in version_status or "❌" in changelog_status or "❌" in publish_status,
             "has_warning": "⚠" in version_status or "⚠" in changelog_status or "⚠" in publish_status,
+            "test_link": f"{api_url}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1",
+            "publish_link": f"{api_url}?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Fpublish%20connector%3Dconnectors%2F{connector}&ghPullRequestNumber=1"
         }
     return result
 
