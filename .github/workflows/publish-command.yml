@@ -36,7 +36,7 @@ jobs:
       - name: Mock connection publication
         run: |
           echo "Mock connection publication (sleep for 10 seconds)..."
-          sleep 10000
+          sleep 10
           echo "Connector ${{ github.event.inputs.connector }} has been published"
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
