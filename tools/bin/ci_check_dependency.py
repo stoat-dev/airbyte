@@ -39,6 +39,7 @@ COMMENT_TEMPLATE_PATH = ".github/comment_templates/connector_dependency_template
 # TODO: move to server
 STOAT_API_URL = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/api/github/workflows/dispatch"
 APP_INSTALLATION_ID = 31425717
+BRANCH_NAME = "liren%2Fairbyte-connector-plugin"
 
 
 def main():
@@ -165,12 +166,12 @@ def get_connector_changelog_status(connector: str, version: str) -> str:
 
 
 def get_connector_test_status(connector: str) -> str:
-    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=test-command.yml"
+    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=test-command.yml&gitref={BRANCH_NAME}"
     return f"[▶️ Test]({test_link})"
 
 
 def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
-    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=publish-command.yml"
+    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch={BRANCH_NAME}&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=publish-command.yml&gitref={BRANCH_NAME}"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
         return "⚪ Ignored"

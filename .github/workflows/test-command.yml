@@ -24,6 +24,10 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.gitref }}
       - name: Mock connection publication
         run: |
           echo "Mock connection test (sleep for 12 seconds)..."
