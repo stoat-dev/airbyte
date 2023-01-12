@@ -165,12 +165,12 @@ def get_connector_changelog_status(connector: str, version: str) -> str:
 
 
 def get_connector_test_status(connector: str) -> str:
-    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=Run%20Integration%20Test"
+    test_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=test-command.yml"
     return f"[▶️ Test]({test_link})"
 
 
 def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
-    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=Publish%20Connector%20Image"
+    publish_link = f"{STOAT_API_URL}?ghOwner=stoat-dev&ghRepo=airbyte&connector={connector}&ghBranch=liren%2Fairbyte-connector-plugin&ghInstallationId={APP_INSTALLATION_ID}&ghWorkflow=publish-command.yml"
 
     if any(regex.match(connector) for regex in IGNORED_SOURCES):
         return "⚪ Ignored"
