@@ -10,7 +10,7 @@
 </summary>
 
 | Connector | Version | Changelog | Test | Publish |
-| --- | :---: | :---: | :---: |
+| --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.sources}}
 | `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![launch-integration-test](https://shields.io/badge/-Launch-green)](https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2Fsource-{{ @key }}&ghPullRequestNumber=1) | {{{ this.publish_status }}} |
 {{/each}}
@@ -29,7 +29,7 @@
 </summary>
 
 | Connector | Version | Changelog | Test | Publish |
-| --- | :---: | :---: | :---: |
+| --- | :---: | :---: | :---: | :---: |
 {{#each plugins.json.connectors.value.destinations}}
 | `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | [![launch-integration-test](https://shields.io/badge/-Launch-green)](https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/plugins/comments?ghOwner=stoat-dev&ghRepo=airbyte&content=%2Ftest%20connector%3Dconnectors%2Fdestination-{{ @key }}&ghPullRequestNumber=1) | {{{ this.publish_status }}} |
 {{/each}}
