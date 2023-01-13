@@ -166,6 +166,7 @@ def get_connector_changelog_status(connector: str, version: str) -> str:
 
 
 def get_connector_test_status(connector: str) -> str:
+    connector_type = connector.split("-")[0]
     params = {
         "ghOwner": "stoat-dev",
         "ghRepo": "airbyte",
@@ -173,8 +174,8 @@ def get_connector_test_status(connector: str) -> str:
         "ghPullRequestNumber": 1,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "test-command.yml",
-        "taskId": "connector-test-running",
-        "eventKey": connector,
+        "taskId": "connectors",
+        "eventKey": f"{connector_type}s.{connector}.test_running",
         "connector": connector,
         "gitref": BRANCH_NAME,
     }
@@ -183,6 +184,7 @@ def get_connector_test_status(connector: str) -> str:
 
 
 def get_connector_publish_status(connector: str, version: str, definition: json) -> str:
+    connector_type = connector.split("-")[0]
     params = {
         "ghOwner": "stoat-dev",
         "ghRepo": "airbyte",
@@ -190,8 +192,8 @@ def get_connector_publish_status(connector: str, version: str, definition: json)
         "ghPullRequestNumber": 1,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "publish-command.yml",
-        "taskId": "connector-publish-running",
-        "eventKey": connector,
+        "taskId": "connectors",
+        "eventKey": f"{connector_type}s.{connector}.publish_running",
         "connector": connector,
         "gitref": BRANCH_NAME,
     }
