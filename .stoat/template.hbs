@@ -7,7 +7,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.sources}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{{ this.test_status }}} | {{{ this.publish_status }}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#is plugins.json.connector-test.value.[@key] 'running' }} ⏳ Running {{else}} {{{ this.test_status }}} {{/is}} | {{{ this.publish_status }}} |
 {{/each}}
 
 {{/if}}
@@ -18,7 +18,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.destinations}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{{ this.test_status }}} | {{{ this.publish_status }}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#is plugins.json.connector-test.value.[@key] 'running' }} ⏳ Running {{else}} {{{ this.test_status }}} {{/is}} | {{{ this.publish_status }}} |
 {{/each}}
 
 {{/if}}
