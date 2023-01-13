@@ -21,20 +21,6 @@ on:
         required: false
 
 jobs:
-  workflow-start:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.inputs.gitref }}
-      - name: Mark workflow as started
-        run: |
-          echo "{ \"${{ github.event.inputs.connector }}\": \"running\" }" > connector_test.json
-      - name: Run Stoat action
-        uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
-        if: always()
-
   integration-test:
     needs: workflow-start
     runs-on: ubuntu-latest
