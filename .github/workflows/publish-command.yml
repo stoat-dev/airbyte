@@ -31,7 +31,6 @@ on:
 
 jobs:
   publish-image:
-    needs: workflow-start
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

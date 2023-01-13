@@ -22,7 +22,6 @@ on:
 
 jobs:
   integration-test:
-    needs: workflow-start
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
