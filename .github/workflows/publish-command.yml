@@ -33,6 +33,10 @@ jobs:
   workflow-start:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.gitref }}
       - name: Mark workflow as started
         run: |
           echo "{ \"${{ github.event.inputs.connector }}\": \"running\" }" > connector_publish.json
