@@ -18,7 +18,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.destinations}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.publish_running }} ⏳ Running {{else}} {{{ this.test_status }}} {{/if}} | {{{ this.publish_status }}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.test_running }} ⏳ Running {{else}} {{{ this.test_status }}} {{/if}} | {{{ this.publish_status }}} |
 {{/each}}
 
 {{/if}}
