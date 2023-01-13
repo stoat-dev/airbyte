@@ -173,9 +173,8 @@ def get_connector_test_status(connector: str) -> str:
         "ghPullRequestNumber": 1,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "test-command.yml",
-        "taskId": "connector-test",
+        "taskId": "connector-test-running",
         "eventKey": connector,
-        "eventValue": "running",
         "connector": connector,
         "gitref": BRANCH_NAME,
     }
@@ -191,9 +190,8 @@ def get_connector_publish_status(connector: str, version: str, definition: json)
         "ghPullRequestNumber": 1,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "publish-command.yml",
-        "taskId": "connector-publish",
+        "taskId": "connector-publish-running",
         "eventKey": connector,
-        "eventValue": "running",
         "connector": connector,
         "gitref": BRANCH_NAME,
     }
