@@ -45,7 +45,9 @@ jobs:
           echo "Connector ${{ github.event.inputs.connector }} has been published"
       - name: Mark workflow as completed
         run: |
-          echo "{ \"${{ github.event.inputs.connector }}\": \"${{ steps.publish.outcome }}\" }" > connector_publish.json
+          export CONNECTOR=${{ github.event.inputs.connector }}
+          export CONNECTOR_TYPE=$(echo ${CONNECTOR} | cut -d"-" -f1)
+          echo "{ \"${CONNECTOR_TYPE}s\": { \"${CONNECTOR}\": { \"publish_running\": false } } }" > connector_report.json
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()
