@@ -40,6 +40,7 @@ COMMENT_TEMPLATE_PATH = ".github/comment_templates/connector_dependency_template
 STOAT_API_URL = "https://stoat-git-liren-airbyte-connector-plugin-stoat-dev.vercel.app/api/github/workflows/dispatch"
 APP_INSTALLATION_ID = 31425717
 BRANCH_NAME = "liren%2Fairbyte-connector-plugin"
+COMMENT_ID = 1380240566
 
 
 def main():
@@ -172,6 +173,7 @@ def get_connector_test_status(connector: str) -> str:
         "ghRepo": "airbyte",
         "ghBranch": BRANCH_NAME,
         "ghPullRequestNumber": 1,
+        "ghCommentId": COMMENT_ID,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "test-command.yml",
         "taskId": "connectors",
@@ -190,6 +192,7 @@ def get_connector_publish_status(connector: str, version: str, definition: json)
         "ghRepo": "airbyte",
         "ghBranch": BRANCH_NAME,
         "ghPullRequestNumber": 1,
+        "ghCommentId": COMMENT_ID,
         "ghInstallationId": APP_INSTALLATION_ID,
         "ghWorkflow": "publish-command.yml",
         "taskId": "connectors",
