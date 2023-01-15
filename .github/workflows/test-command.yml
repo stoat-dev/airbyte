@@ -2,6 +2,7 @@ name: Run Integration Test
 on:
   workflow_dispatch:
     inputs:
+      # e.g. source-github
       connector:
         description: "Airbyte Connector"
         required: true
@@ -34,9 +35,11 @@ jobs:
           echo "Mock connection test (sleep for 60 seconds)..."
           sleep 60
           echo "Integration test for connector ${{ github.event.inputs.connector }} has completed"
-#      - name: Mark workflow as completed
-#        run: |
-#          echo "{ \"${{ github.event.inputs.connector }}\": \"${{ steps.test.outcome }}\" }" > connector_test.json
+      - name: Mark workflow as completed
+        run: |
+          export CONNECTOR=${{ github.event.inputs.connector }}
+          export CONNECTOR_TYPE=$(echo ${CONNECTOR} | cut -d"-" -f1)
+          echo "{ \"${CONNECTOR_TYPE}s\": { \"${CONNECTOR}\": { \"test_running\": false } } }" > connector_report.json
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()
