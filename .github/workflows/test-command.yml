@@ -44,7 +44,7 @@ jobs:
             "${CONNECTOR_TYPE}s": {
               "${CONNECTOR}": {
                 "test_running": false,
-                "test_run_status": "{{ steps.test.outcome === 'failure' && '❌' || '✅' }}",
+                "test_run_status": "${{ steps.test.outcome === 'failure' && '❌' || '✅' }}",
                 "test_run_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               }
             }
