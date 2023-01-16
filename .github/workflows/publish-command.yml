@@ -47,7 +47,7 @@ jobs:
         run: |
           export CONNECTOR=${{ github.event.inputs.connector }}
           export CONNECTOR_TYPE=$(echo ${CONNECTOR} | cut -d"-" -f1)
-          cat <<-EOF
+          cat > connector_report.json <<-EOF
           {
             "${CONNECTOR_TYPE}s": {
               "${CONNECTOR}": {
@@ -57,7 +57,7 @@ jobs:
               }
             }
           }
-          EOF > connector_report.json
+          EOF
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()
