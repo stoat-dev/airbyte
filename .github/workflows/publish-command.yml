@@ -52,7 +52,7 @@ jobs:
             "${CONNECTOR_TYPE}s": {
               "${CONNECTOR}": {
                 "publish_running": false,
-                "publish_status": "{{ steps.publish.outcome === 'failure' && '❌' || '✅' }}",
+                "publish_run_status": "{{ steps.publish.outcome === 'failure' && '❌' || '✅' }}",
                 "publish_run_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               }
             }
