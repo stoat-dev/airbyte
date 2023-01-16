@@ -39,7 +39,17 @@ jobs:
         run: |
           export CONNECTOR=${{ github.event.inputs.connector }}
           export CONNECTOR_TYPE=$(echo ${CONNECTOR} | cut -d"-" -f1)
-          echo "{ \"${CONNECTOR_TYPE}s\": { \"${CONNECTOR}\": { \"test_running\": false } } }" > connector_report.json
+          cat <<-EOF
+          {
+            "${CONNECTOR_TYPE}s": {
+              "${CONNECTOR}": {
+                "test_running": false,
+                "test_status": "{{ steps.test.outcome === 'failure' && '❌' || '✅' }}",
+                "test_run_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              }
+            }
+          }
+          EOF > connector_report.json
       - name: Run Stoat action
         uses: stoat-dev/stoat-action@liren/airbyte-connector-plugin
         if: always()

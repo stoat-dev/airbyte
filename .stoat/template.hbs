@@ -4,10 +4,10 @@
 {{#if plugins.json.connectors.value.show_source }}
 #### Sources ({{ plugins.json.connectors.value.num_sources }})
 
-| Connector | Version | Changelog | Test | Publish |
-| --- | :--- | :--- | :--- | :--- |
+| Connector | Version | Changelog | Test | Test Result | Publish |
+| --- | :--- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.sources}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.test_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.test_status }}} {{/if}} | {{#if this.publish_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.publish_status }}} {{/if}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.test_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.test_status }}} {{/if}} | {{#if this.test_status }} {{ this.test_status }} [Link]({{ this.run_url }}) {{/if}} | {{#if this.publish_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.publish_status }}} {{/if}} |
 {{/each}}
 
 {{/if}}
@@ -18,7 +18,7 @@
 | Connector | Version | Changelog | Test | Publish |
 | --- | :--- | :--- | :--- | :--- |
 {{#each plugins.json.connectors.value.destinations}}
-| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.test_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.test_status }}} {{/if}} | {{#if this.publish_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.publish_status }}} {{/if}} |
+| `{{ @key }}` | {{{ this.version_status }}} | {{{ this.changelog_status }}} | {{#if this.test_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.test_status }}} {{/if}} | {{#if this.test_status }} {{ this.test_status }} [Link]({{ this.run_url }}) {{/if}} | {{#if this.publish_running }} <img src="https://stoat-dev--static.stoat.page/loading.gif" width="12%"/> {{else}} {{{ this.publish_status }}} {{/if}} |
 {{/each}}
 
 {{/if}}
