@@ -32,8 +32,8 @@ jobs:
       - name: Mock connection test
         id: test
         run: |
-          echo "Mock connection test (sleep for 12 seconds)..."
-          sleep 12
+          echo "Mock connection test (sleep for 2 seconds)..."
+          sleep 2
           echo "Integration test for connector ${{ github.event.inputs.connector }} has completed"
       - name: Mark workflow as completed
         run: |
